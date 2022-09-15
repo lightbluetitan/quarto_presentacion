@@ -1,0 +1,234 @@
+---
+title: Bar Charts - Python
+subtitle: Matplotlib - Numpy - Seaborn
+description: El presente documento muestra como crear diagramas de barras (Bar Charts) en el lenguaje de programación Python, utilizando las librerías Matplotlib, Numpy y Seaborn.
+date: today #last-modified #now
+author: 
+   name: Renzo Cáceres Rossi
+   url:  https://www.youtube.com/c/renzocaceresrossi
+   affiliation: Hablamos R
+   affiliation-url: https://hablamosr.blogspot.com/
+title-block-banner: "#008080"
+format: 
+  docx: 
+    toc: true
+    toc-title: Menú Bar Charts
+    toc-location: right
+    code-fold: true
+    code-tools: true
+    css: "style_031.css"
+    number-sections: true
+bibliography: biblio_033.bib
+csl: apa.csl
+link-citations: yes
+jupyter: python3
+lang: Es-es
+---
+
+<!-- Quarto permite ejecutar código de R,Python,Julia y Observable JS -->
+
+```{python,include=FALSE}
+#| echo: false
+
+import matplotlib.pyplot as plt
+
+import numpy as np
+
+import seaborn as sns
+
+from platform import python_version
+
+version=python_version()
+
+
+```
+
+::: callout-important
+Recomendamos instalar las últimas versiones de **R,RStudio,Python y Quarto**.
+:::
+
+<a name="abc"></a>
+
+[**Fin Documento**](#def)
+
+## Diagramas de Barras
+
+El diagrama de barras (**Bar Chart**) es un gráfico estadístico que nos permite representar la distribución de frecuencias de variables cualitativas y cuantitativas discretas; nuestro objetivo es pasar del lápiz y papel al uso del lenguaje de programación Python[@van1995python] , recomendamos la lectura del libro Python: Los fundamentos del lenguaje[@chazallet2016python]; compartimos la siguiente imagen como referencia.
+
+<center>![](diagrama_barras_amano.jpg){width="400"}</center>
+
+::: {.callout-warning collapse="true"}
+## Click aquí como instalar y activar librerías Python
+
+pip install matplotlib<br> pip install numpy<br> pip install seaborn<br> import matplotlib.pyplot as plt <br> import numpy as np <br> import seaborn as sns
+:::
+
+## Bar Charts - Matplotlib
+
+**Matplotlib**[@Hunter:2007] es una librería del lenguaje de programación Python, que nos permite crear gráficos estadísticos de gran calidad, **RMarkdown**[@RMarkdown] nos permite trabajar con otros lenguajes de programación tales como **C++, SQL, Julia**, entre muchos otros; a continuación mostramos un diagrama de barras (**Bar Chart**) creado con Matplotlib.
+
+```{python,results='hide',collapse=TRUE}
+
+#| fig-align: center
+#| fig-cap: "Bar Chart creado con Matplotlib"
+
+
+eje_x = ['Python', 'R', 'Node.js', 'PHP']
+ 
+
+eje_y = [50,20,35,47]
+ 
+
+plt.bar(eje_x, eje_y)
+ 
+
+plt.ylabel('Cantidad de usuarios')
+ 
+
+plt.xlabel('Lenguajes de programación')
+ 
+
+plt.title('Usuarios de lenguajes de programación')
+ 
+
+plt.show()
+
+
+```
+
+
+
+[**Python for Data Sciene** <https://bit.ly/3Bk8VUM>{target=_blank}]{.aside}
+
+
+## Diagrama Barras Horizontal
+
+A continuación, presentamos como crear un **diagrama de barras horizontal** en el lenguaje de programación Python, utilizando la librería Matplotlib.
+
+```{python,results='hide',collapse=TRUE}
+
+#| fig-align: center
+#| fig-cap: "Bar Chart creado con Matplotlib"
+
+eje_x = ['Prog.', 'Ciencia', 'Mat.', 'Ing.']
+ 
+
+eje_y = [76,31,45,57]
+
+colores =['#FF8C00','#9932CC','#8B0000','#8FBC8F']
+ 
+
+plt.barh(eje_x, eje_y, color=colores)
+
+for index,value in enumerate(eje_y):
+    plt.text(value,index,str(value))
+
+plt.ylabel('Empleados')
+plt.xlabel('Habilidades')
+plt.title('Habilidades')
+plt.show()
+
+```
+
+::: callout-tip
+## Consejo!!!
+
+El uso de **Markdown** mejora la estructura y configuración de tus documentos **Quarto**
+:::
+
+## Diagrama Barras Apiladas
+
+A continuación, presentamos como crear un **diagrama de barras apiladas** en el lenguaje de programación Python, utilizando las librerías **Matplotlib** y **Numpy**[@harris2020array].
+
+```{python,results='hide',collapse=TRUE}
+
+#| fig-align: center
+#| fig-cap: "Bar Chart creado con Matplotlib y Numpy"
+
+
+
+serie_1 = [406, 387, 442, 457, 485]
+serie_2 = [421, 453, 435, 478, 512]
+ 
+ 
+numero_de_grupos = len(serie_1)
+indice_barras = np.arange(numero_de_grupos)
+ancho_barras =0.35
+ 
+plt.bar(indice_barras, serie_1, width=ancho_barras, label='Hombres')
+plt.bar(indice_barras + ancho_barras, serie_2, width=ancho_barras, label='Mujeres')
+plt.legend(loc='best')
+
+plt.xticks(indice_barras + ancho_barras, ('2017', '2018', '2019', '2020','2021'))
+ 
+plt.ylabel('Numero de habitantes')
+plt.xlabel('Año')
+plt.title('Numero de habitantes por genero')
+ 
+plt.show()
+
+```
+
+::: callout-note
+**Quarto** permite ejecutar código de **R,Python,Julia y Observable JS**
+:::
+
+## Bar Charts - Seaborn
+
+**Seaborn**[@Waskom2021] es una librería de Python que nos permite crear gráficos estadísticos de gran calidad, fue creada tomando como base **Matplotlib**.
+
+```{python seaborn,results='hide',collapse=TRUE}
+
+#| fig-align: center
+#| fig-cap: "Bar Chart creado con Seaborn"
+
+eje_x = [4,6,8]
+
+eje_y = [11,7,14]
+
+sns.barplot(x=eje_x,y=eje_y)
+
+plt.title("Número de cilindros")
+
+plt.xlabel("Cilindros")
+
+plt.ylabel("Frecuencias")
+
+plt.show()
+
+
+```
+
+## Markdown - RMarkdown - Quarto
+
+A continuación, mostramos los logos que identifican a las herramientas **Markdown**[^1],**RMarkdown**[^2] y **Quarto**[^3]
+
+[^1]: **Markdown** es un lenguaje de marcado ligero, que permite configurar la estructura y presentación de nuestros documentos, para luego convertirlos a formatos HTML.
+
+[^2]: **RMarkdown** es un paquete del lenguaje de programación R, que nos permite crear documentos científicos y técnicos para convertirlos a formatos tales como HTML,PDF,Word entre otros.
+
+[^3]: **Quarto** es un sistema de publicación de documentos científicos y técnicos, que nos permite ejecutar código de R,Python,Julila y Observable JS.
+
+::: {layout-ncol="3"}
+![Logo Markdown](markdown_logo_01.png){#fig-markdown}
+
+![Logo RMarkdown](rmarkdown_logo_01.png){#fig-rmarkdown}
+
+![Logo Quarto](quarto_logo_01.png){#fig-quarto}
+:::
+
+## YouTube - Tutorial
+
+Compartimos el siguiente tutorial tomado de la plataforma **YouTube** que muestra como crear diagramas de barras (**Bar Charts**) en el lenguaje de programación Python, utilizando las librerías **Matplotlib** y **Seaborn**.
+
+<center>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jPre6LVvr5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+
+</iframe>
+
+</center>
+
+[**Inicio Documento**](#abc)
+
+<a name="def"></a>

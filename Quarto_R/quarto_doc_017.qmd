@@ -1,0 +1,393 @@
+---
+title: Bar Charts - R
+subtitle: barplot() - ggplot2 - lattice
+description: El presente documento muestra como crear diagramas de barras (Bar Charts) en el lenguaje de programación R, utilizando la función base barplot(), así como los paquetes ggplot2 y lattice, incluiremos código de Python y el uso de la librerías Matplotlib y Seaborn.
+date: last-modified #now #today
+author: 
+   name: Renzo Cáceres Rossi
+   url: https://www.youtube.com/c/renzocaceresrossi
+   affiliation: Hablamos R
+   affiliation-url: https://hablamosr.blogspot.com/
+title-block-banner: "#808080"
+format: 
+  docx: 
+    toc: true
+    toc-title: Menú Bar Charts
+    code-fold: true
+    code-tools: true
+    css: "style_031.css"
+    theme: journal
+bibliography: biblio_031.bib
+csl: apa.csl
+link-citations: yes
+lang: Es-es    
+---
+
+<a name="abc"></a>
+
+[**Fin Documento**](#def)
+
+<!-- Quarto es un sistema de publicación de documentos científicos y técnicos -->
+
+```{r setup,include=FALSE}
+
+library(ggplot2)
+
+library(lattice)
+
+library(reticulate)
+
+library(sqldf)
+
+
+```
+
+
+```{python,include=FALSE}
+
+from platform import python_version
+
+version=python_version()
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+
+```
+
+
+
+:::{.callout-important}
+Recomendamos instalar las últimas versiones de **R,RStudio,Python y Quarto**
+:::
+
+
+## Diagramas de Barras 
+
+El diagrama de barras (**Bar Chart**) es un gráfico estadístico que nos permite representar la distribución de frecuencias de variables cualitativas y cuantitativas discretas; nuestro objetivo es pasar del lápiz y papel al uso de los lenguajes de programación `r R.version.string`[@Rprogramming] y Python `r py$version`[@van1995python], recomendamos la lectura del libro **El Arte de Programar en R**[@santana2014arte]; compartimos la siguiente imagen como referencia.
+
+<center>
+
+
+![](diagrama_barras_amano.jpg){width=400}
+
+</center>
+
+
+## Data Set - mtcars
+
+**mtcars** es un data set que ya viene precargado al momento de instalar el **lenguaje de programación R** en nuestro sistema, haremos uso de dicho data set para la creación de distintos diagramas de barras, de las 11 variables y 32 observaciones que lo componen nos enfocaremos en las variables **cyl** (cilindro) y **gear** (engranajes) como se muestra a continuación.
+
+
+
+:::{.panel-tabset}
+
+### mtcars
+
+```{r mtcars}
+
+summary(mtcars)
+
+```
+
+
+### var_cyl
+
+```{r var_cyl}
+
+summary(mtcars$cyl)
+
+cyl_table <- sqldf("select cyl,count(cyl) as cantidad from mtcars group by cyl")
+
+cyl_table
+
+
+```
+
+
+
+### var_gear
+
+```{r var_gear}
+
+summary(mtcars$gear)
+
+gear_table <- sqldf("select gear,count(gear) as cantidad from mtcars group by gear")
+
+gear_table
+
+
+```
+
+
+
+### var_carb
+
+```{r var_carb}
+
+summary(mtcars$carb)
+
+carb_table <- sqldf("select carb,count(carb) as cantidad from mtcars group by carb")
+
+carb_table
+
+```
+
+
+:::
+
+
+- Visualiza el logo de **Markdown** @fig-markdown
+
+- Visualiza el logo de **RMarkdown** @fig-rmarkdown
+
+- Visualiza el logo de **Quarto** @fig-quarto
+
+
+
+
+## mtcars - SQL
+
+**SQLDF**[@sqldf] es un paquete del lenguaje de programación R que nos permite ejecutar sentencias **SQL** sobre data frames, tomaremos con base el data set **mtcars**, así como sus variables **cyl** (cilindros), **gear** (engranajes) y **carb** (carburadores).
+
+
+::::{.columns}
+
+
+:::{.column width="33%"}
+### var_cyl
+
+```{r}
+cyl_table <- sqldf("select cyl,count(cyl) as cantidad from mtcars group by cyl")
+
+cyl_table
+
+```
+
+
+:::
+
+:::{.column width="33%"}
+### var_gear
+
+```{r}
+
+gear_table <- sqldf("select gear,count(gear) as cantidad from mtcars group by gear")
+
+gear_table
+
+```
+
+
+:::
+
+:::{.column width="33%"}
+### var_carb
+
+```{r}
+
+carb_table <- sqldf("select carb,count(carb) as cantidad from mtcars group by carb")
+
+carb_table
+
+```
+
+
+:::
+
+
+::::
+
+
+
+
+:::{.callout-warning collapse="true"}
+## Click aquí como instalar y activar paquetes en R
+install.packages("ggplot2")<br>
+install.packages("lattice")<br>
+install.packages("reticulate")<br>
+install.packages("sqldf")<br>
+library(ggplot2)<br>
+library(lattice)<br>
+library(reticulate)<br>
+library(sqldf)
+
+:::
+
+
+
+## Bar Chart - barplot()
+
+La función  `barplot()` nos permite crear diagramas de barras (**Bar Charts**) en el lenguaje de programación R, utilizaremos la variable cyl (**cilindros**) para crear el gráfico estadístico respectivo, como se muestra en la siguiente imagen.
+
+```{r barplot,fig.align='center',fig.cap="Bar Chart creado con la función base barplot()"}
+
+x <- table(mtcars$cyl)
+
+colores <- c("orange","blue","purple")
+
+barplot(x,xlab="Cilindros",ylab="Frecuencias",main="Número de Cilindros",col=colores)
+
+
+```
+
+
+## Bar Chart - ggplot2
+
+**ggplot2**[@ggplot2] es un paquete del lenguaje de programación que nos permite crear gráficos estadísticos de gran calidad, haremos uso de la variable cyl (**cilindros**) para la creación del gráfico estadístico respectivo, como se muestra a continuación.
+
+```{r ggplot2,fig.align='center',fig.cap="Bar Chart creado con ggplot2"}
+
+ggplot(mtcars,aes(cyl)) + geom_bar(fill=colores) + labs(x="Cillindros",y="Frecuencias",title="Número de Cilindros") + theme_dark()
+
+```
+
+
+[Recomendamos **R for Data Science** -  Cognitive Class <https://cognitiveclass.ai/courses/r-101>{target=_blank}]{.aside}
+
+
+## Bar Chart - Lattice
+
+**Lattice**[@lattice] es un paquete del lenguaje de programación R, que nos permite crear gráficos estadísticos de muy buena calidad, nos enfocaremos en la variable cyl (**cilindros**) para la creación del gráfico estadístico respectivo, como se muestra a continuación.
+
+```{r lattice,fig.align='center',fig.cap="Bar Chart creado con lattice"}
+
+barchart(x,xlab="Cilindros",ylab="Frecuencias",main="Número de Cilindros",col=colores,horizontal=FALSE)
+
+```
+
+
+## mtcars - cyl & gear
+
+A continuación, mostramos como unir dos diagramas de barras (**Bar Charts**) en un solo gráfico, tomando como base el data set **mtcars**, así como sus variables **cyl** (cilindros) y **gear** (engranajes).
+
+```{r cyl_mtcars,fig.align='center',fig.cap="Bar Charts creado con la función barplot()"}
+
+y <- table(mtcars$gear)
+
+par(mfrow=c(1,2))
+
+barplot(x,xlab="Cilindros",ylab="Frecuencias",main="Número de Cilindros",col=colores)
+
+barplot(y,xlab="Engranajes",ylab="Frecuencias",main="Número de Engranajes",col=rainbow(3))
+
+
+```
+
+
+
+:::{.callout-tip}
+## Consejo!!!
+El uso de **Markdown** mejora la estructura y presentación de tus documentos **Quarto**
+:::
+
+
+## Bar Charts - Matplotlib
+
+**Matplotlib**[@Hunter:2007] es una librería del lenguaje de programación Python, que nos permite crear gráficos estadísticos de gran calidad, **RMarkdown**[@RMarkdown] nos permite trabajar con otros lenguajes de programación tales como **C++, SQL, Julia**, entre muchos otros; a continuación mostramos un diagrama de barras (**Bar Chart**) creado con Matplotlib.
+
+```{python matplotlib,fig.align='center',fig.cap="Bar Chart creado con Matplotlib",results='hide',collapse=TRUE}
+
+eje_x = ['Python', 'R', 'Node.js', 'PHP']
+ 
+
+eje_y = [50,20,35,47]
+ 
+
+plt.bar(eje_x, eje_y)
+ 
+
+plt.ylabel('Cantidad de usuarios')
+ 
+
+plt.xlabel('Lenguajes de programación')
+ 
+
+plt.title('Usuarios de lenguajes de programación')
+ 
+
+plt.show()
+
+
+```
+
+
+## Bar Charts - Seaborn
+
+**Seaborn**[@Waskom2021] es una librería de Python que nos permite crear gráficos estadísticos de gran calidad, fue creada tomando como base **Matplotlib**.
+
+```{python seaborn,fig.align='center',fig.cap="Bar Chart creado con Seaborn",results='hide',collapse=TRUE}
+
+eje_x = [4,6,8]
+
+eje_y = [11,7,14]
+
+sns.barplot(x=eje_x,y=eje_y)
+
+plt.title("Número de cilindros")
+
+plt.xlabel("Cilindros")
+
+plt.ylabel("Frecuencias")
+
+plt.show()
+
+```
+
+
+
+:::{.callout-note}
+**Quarto** permite ejecutar código de **R,Python,Julia y Observable JS**
+:::
+
+
+## Markdown - RMarkdown - Quarto
+
+A continuación, mostramos los logos que identifican a las herramientas **Markdown**[^1],**RMarkdown**[^2] y **Quarto**[^3]
+
+
+:::{layout-ncol=3}
+
+![Logo Markdown](markdown_logo_01.png){#fig-markdown}
+
+![Logo RMarkdown](rmarkdown_logo_01.png){#fig-rmarkdown}
+
+![Logo Quarto](quarto_logo_01.png){#fig-quarto}
+
+
+:::
+
+
+## YouTube - Tutorial
+
+Compartimos el siguiente tutorial tomado de la plataforma **YouTube** que muestra como crear diagramas de barras (**Bar Charts**) en el lenguaje de programación Python, utilizando las librerías **Matplotlib** y **Seaborn**.
+
+<center>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/EkxRj02iaLk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external=1></iframe>
+
+
+</center>
+
+[**Inicio Documento**](#abc)
+
+
+<a name="def"></a>
+
+[^1]:**Markdown** es un lenguaje de marcado ligero, que permite configurar la estructura y presentación de nuestros documentos, para luego convertirlos a formatos HTML.
+
+
+[^2]:**RMarkdown** es un paquete del lenguaje de programación R, que nos permite crear documentos científicos y técnicos para convertirlos a formatos tales como HTML,PDF,Word entre otros.
+
+
+[^3]:**Quarto** es un sistema de publicación de documentos científicos y técnicos, que nos permite ejecutar código de R,Python,Julila y Observable JS.
+
+
+
+
+
+
+
+
+
