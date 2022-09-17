@@ -1,0 +1,237 @@
+---
+title: Bar Charts - Python
+subtitle: Matplotlib - Numpy - Seaborn
+date: last-modified
+description: El presente documento muestra como crear diagramas de barras (Bar Chart) en el lenguaje de programación Python, haciendo uso de las librerías Matplotlib,Numpy y Seaborn.
+author: 
+   name: Renzo Cáceres Rossi
+   url: https://www.youtube.com/c/RenzoCaceresRossi
+   affiliation: Hablamos R
+   affiliation-url: https://hablamosr.blogspot.com/
+title-block-banner: "#808080"
+format: 
+  html:
+    theme: journal
+    toc: true
+    code-fold: true
+    code-tools: true
+    css: "style_009.css"
+bibliography: biblio_008.bib
+csl: apa.csl
+link-citations: yes  
+jupyter: python3
+lang: Es-es
+---
+
+```{python,include=FALSE}
+#| echo: false
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+import numpy as np
+
+from platform import python_version
+
+version = python_version()
+
+```
+
+
+
+:::{.callout-note}
+Recomendamos tener instalados las últimas versiones de **R,Python,RStudio y Quarto**
+:::
+
+<!-- Quarto nos permite trabajar con R,Python,Julia y Observable JS -->
+
+## Bar Charts - Matplotlib
+
+**Matplotlib**[@Hunter:2007] es una librería del lenguaje de programación Python[@van1995python] , que nos permite crear gráficos estadísticos de gran calidad, **RMarkdown**[@rmarkdown] nos permite trabajar con otros lenguajes de programación tales como **C++, SQL, Julia**, entre muchos otros; a continuación mostramos un diagrama de barras (**Bar Chart**) creado con Matplotlib.
+
+```{python,results='hide',collapse=TRUE}
+
+#| fig-align: center
+#| fig-cap: "Diagrama Barras con Matplotlib"
+
+eje_x = ['Python', 'R', 'Node.js', 'PHP']
+ 
+
+eje_y = [50,20,35,47]
+
+colores =['#FF8C00','#9932CC','#E9967A','#483D8B']
+ 
+
+plt.bar(eje_x, eje_y,color=colores)
+ 
+
+plt.ylabel('Cantidad de usuarios')
+ 
+
+plt.xlabel('Lenguajes de programación')
+ 
+
+plt.title('Usuarios de lenguajes de programación')
+ 
+
+plt.show()
+
+
+```
+
+
+[Deberias seguir **Python for Data Science** del IBM Cognitive Class <https://cognitiveclass.ai/courses/python-for-data-science>{target=_blank}]{.aside}
+
+
+:::{.callout-caution collapse="true"}
+## Click aquí para instalar y activar librerías en Python
+pip install matplotlib<br>
+pip install numpy<br>
+pip install seaborn<br>
+import matplotlib.pyplot as plt <br>
+import numpy as np <br>
+import seaborn as sns 
+
+:::
+
+## Horizontal Bar Charts - Matplotlib
+
+A continuación, mostramos un diagrama de barras horizontal (**Horizontal Bar Charts**) creaado haciendo uso de la librería **Matplotlib**.
+
+```{python,results='hide',collapse=TRUE}
+
+#| fig-align: center
+
+eje_x = ['Prog.', 'Ciencia', 'Mat.', 'Ing.']
+ 
+
+eje_y = [76,31,45,57]
+
+colors =['#4682B4','#D2B48C','#008080','#D8BFD8']
+ 
+plt.barh(eje_x, eje_y, color= colors)
+
+
+for index,value in enumerate(eje_y):
+    plt.text(value,index,str(value))
+
+
+plt.ylabel('Empleados')
+
+plt.xlabel('Habilidades')
+
+plt.title('Habilidades')
+
+plt.show()
+
+
+```
+
+
+Revisa como luce el logo de RMarkdown @fig-rmarkdown
+
+Revisa como luce el logo de Quarto @fig-quarto
+
+## Barras Apiladas - Matplotlib
+
+La siguiente imagen muestra un conjunto de barras apiladas creadas haciendo uso de las librerías **Matplotlib** y **Numpy**[@2020NumPy-Array]
+
+```{python,results='hide',collape=TRUE}
+#| fig-align: center
+
+serie_1 = [406, 387, 442, 457, 485]
+serie_2 = [421, 453, 435, 478, 512]
+ 
+ 
+numero_de_grupos = len(serie_1)
+indice_barras = np.arange(numero_de_grupos)
+ancho_barras =0.35
+ 
+plt.bar(indice_barras, serie_1, width=ancho_barras, label='Hombres')
+plt.bar(indice_barras + ancho_barras, serie_2, width=ancho_barras, label='Mujeres')
+plt.legend(loc='best')
+## Se colocan los indicadores en el eje x
+plt.xticks(indice_barras + ancho_barras, ('2017', '2018', '2019', '2020','2021'))
+ 
+plt.ylabel('Numero de habitantes')
+plt.xlabel('Año')
+plt.title('Numero de habitantes por genero')
+ 
+plt.show()
+
+
+
+```
+
+
+
+:::{.callout-tip}
+## Consejo
+
+**Markdown** te permitirá mejorar la estructura y calidad de tus documentos en **Quarto**
+
+:::
+
+## Bar Charts - Seaborn
+
+**Seaborn**[@michael_waskom_2017_883859] es una librería de visualización de datos para Python desarrollada sobre **Matplotlib**. 
+Ofrece una interfaz de alto nivel para la creación de atractivas gráficas.
+
+```{python,results='hide',collapse=TRUE}
+#| fig-align: center
+
+eje_x=[4,6,8]
+
+eje_y = [11,7,14]
+
+sns.barplot(x=eje_x,y=eje_y)
+
+plt.title("Número de cilindros")
+
+plt.xlabel("Cilindros")
+
+plt.ylabel("Frecuencias")
+
+plt.show()
+
+```
+
+
+## RMarkdown & Quarto
+
+Mostramos los logos de las herramientas **RMarkdown**[^1] y **Quarto**[^2]
+
+
+:::{layout-ncol=2}
+
+
+![Logo RMarkdown](rmarkdown_logo_01.png){#fig-rmarkdown}
+
+![Logo Quarto](quarto_logo_01.png){#fig-quarto}
+
+:::
+
+
+## Tutorial - Matplotlib
+
+El presente tutorial tomado de la plataforma [**YouTube**](https://www.youtube.com/){target=_blank} muestra como crear diagramas de barras (**Bar Charts**) haciendo uso de la librería **Matplotlib**.
+
+<center>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jPre6LVvr5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external=1></iframe>
+
+
+
+</center>
+
+
+[^1]: RMarkdown es un paquete del lenguaje de programación R que nos permite convertir texto plano y código de R y Python a documentos reproducibles tales como HTML,PDF, Microsoft Word entre otros.
+
+
+[^2]: Quarto es un sistema de publicación de documentos científicos y técnicos que nos permite trabajar con R,Python, Julia y Observable JS, así como herramientas como RStudio,Visual Studio Code, Jupyter Labs y editores.
+
+
+
+
+
